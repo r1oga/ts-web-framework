@@ -32,7 +32,12 @@ export class User {
   }
 
   async save(): Promise<void> {
-    await this.sync.save(this.attributes.getAll())
+    try {
+      await this.sync.save(this.attributes.getAll())
+      this.events.trigger('save')
+    } catch {
+      this.events.trigger('error')
+    }
   }
 
   async fetch(): Promise<void> {
