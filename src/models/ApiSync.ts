@@ -13,7 +13,7 @@ interface HasId {
   --> we loose some type safety (we don't know what we pass to serialize function)
   3 Use Generic Sync class
 */
-export class Sync<T extends HasId> {
+export class ApiSync<T extends HasId> {
   constructor(public rootUrl: string) {}
 
   //  fetch data from server

@@ -1,50 +1,16 @@
-import { UserProps, Callback } from './interfaces.ts'
-import { Eventing } from './Eventing.ts'
-import { Sync } from './Sync.ts'
+import { Model } from './Model.ts'
+import { UserProps } from './interfaces.ts'
 import { Attributes } from './Attributes.ts'
+import { ApiSync } from './ApiSync.ts'
+import { Eventing } from './Eventing.ts'
 import { API_URL } from '../config.js'
 
-export class User {
-  public events: Eventing = new Eventing()
-  public sync: Sync<UserProps> = new Sync<UserProps>(API_URL)
-  public attributes: Attributes<UserProps>
-
-  constructor(attrs: UserProps) {
-    this.attributes = new Attributes<UserProps>(attrs)
-  }
-
-  get get() {
-    return this.attributes.get
-  }
-
-  set(update: UserProps) {
-    this.attributes.set(update)
-    this.events.trigger('change')
-  }
-
-  get on() {
-    return this.events.on
-  }
-
-  // returns reference to events.trigger function
-  get trigger() {
-    return this.events.trigger
-  }
-
-  async save(): Promise<void> {
-    try {
-      await this.sync.save(this.attributes.getAll())
-      this.events.trigger('save')
-    } catch {
-      this.events.trigger('error')
-    }
-  }
-
-  async fetch(): Promise<void> {
-    const id = this.get('id')
-    if (typeof id !== 'number') {
-      throw new Error('Cannot fetch without an id')
-    }
-    this.set(await this.sync.fetch(id))
+export class User extends Model<UserProps> {
+  static buildUser(attrs: UserProps): User {
+    return new User(
+      new Attributes<UserProps>(attrs),
+      new Eventing(),
+      new ApiSync<UserProps>(API_URL)
+    )
   }
 }
