@@ -1,18 +1,9 @@
 {
   "users": [
     {
-      "name": "r1oga",
-      "age": 50,
-      "id": 1
-    },
-    {
-      "id": 2,
-      "name": "retest",
-      "age": 39
-    },
-    {
-      "name": "new user",
-      "id": 3
+      "id": 1,
+      "name": "newuser",
+      "age": 50
     }
   ]
 }

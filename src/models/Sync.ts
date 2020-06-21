@@ -1,7 +1,7 @@
 import { UserProps } from './interfaces.ts'
 
 interface HasId {
-  id: number
+  id?: number
 }
 /*
   design options:

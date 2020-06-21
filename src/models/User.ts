@@ -1,37 +1,43 @@
 import { UserProps, Callback } from './interfaces.ts'
 import { Eventing } from './Eventing.ts'
 import { Sync } from './Sync.ts'
+import { Attributes } from './Attributes.ts'
 import { API_URL } from '../config.js'
 
 export class User {
   public events: Eventing = new Eventing()
   public sync: Sync<UserProps> = new Sync<UserProps>(API_URL)
+  public attributes: Attributes<UserProps>
 
-  constructor(private data: UserProps) {}
-
-  //  get single piece of info about user
-  get(propName: keyof UserProps): string | number | void {
-    return this.data[propName]
+  constructor(attrs: UserProps) {
+    this.attributes = new Attributes<UserProps>(attrs)
   }
 
-  on(eventName: string, cb: Callback): void {
-    this.events.on(eventName, cb)
+  get get() {
+    return this.attributes.get
   }
 
-  trigger(eventName: string): void {
-    this.events.trigger(eventName)
-  }
-  //  change user info
-  set(update: UserProps): void {
-    Object.assign(this.data, update)
+  get set() {
+    return this.attributes.set
   }
 
-  save(): void {
+  get on() {
+    return this.events.on
+  }
+
+  // returns reference to events.trigger function
+  get trigger() {
+    return this.events.trigger
+  }
+
+  async save(): Promise<void> {
     const id = this.get('id')
-    this.sync.save(this.data, id)
+    const name = this.get('name')
+    const age = this.get('age')
+    this.sync.save({ id, name, age })
   }
 
-  async fetch(id: number): Promise<void> {
-    this.set(await this.sync.fetch(id))
+  async fetch(): Promise<void> {
+    this.set(await this.sync.fetch(this.get('id') as number))
   }
 }
