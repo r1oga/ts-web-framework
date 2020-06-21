@@ -1,9 +1,11 @@
 import { UserProps, Callback } from './interfaces.ts'
-import { API_URL } from '../config.js'
 import { Eventing } from './Eventing.ts'
+import { Sync } from './Sync.ts'
+import { API_URL } from '../config.js'
 
 export class User {
   public events: Eventing = new Eventing()
+  public sync: Sync<UserProps> = new Sync<UserProps>(API_URL)
 
   constructor(private data: UserProps) {}
 
@@ -24,29 +26,12 @@ export class User {
     Object.assign(this.data, update)
   }
 
-  //  fetch data from server
-  async fetch() {
-    const res = await fetch(`${API_URL}users/${this.get('id')}`)
-    const data = await res.json()
-    this.set(data)
+  save(): void {
+    const id = this.get('id')
+    this.sync.save(this.data, id)
   }
 
-  // store user data on server
-  async save() {
-    const id = this.get('id')
-    if (id) {
-      const id = this.get('id')
-      await fetch(`${API_URL}users/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(this.data)
-      })
-    } else {
-      await fetch(`${API_URL}users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(this.data)
-      })
-    }
+  async fetch(id: number): Promise<void> {
+    this.set(await this.sync.fetch(id))
   }
 }

@@ -5,5 +5,3 @@ export interface UserProps {
 }
 
 export type Callback = () => void
-
-// export interface Event
