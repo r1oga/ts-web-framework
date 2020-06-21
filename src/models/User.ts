@@ -1,4 +1,4 @@
-import { UserProps, Callback } from './interfaces'
+import { UserProps, Callback } from './interfaces.ts'
 
 export class User {
   events: { [key: string]: Callback[] } = {}
@@ -29,7 +29,7 @@ export class User {
     that something has changed
   */
   trigger(eventName: string): void {
-    this.events[eventName]?.forEach((cb: () => {}) => cb())
+    this.events[eventName]?.forEach(cb => cb())
   }
 
   // //  fetch data from server about a user

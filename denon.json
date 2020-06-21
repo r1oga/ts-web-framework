@@ -1,0 +1,23 @@
+{
+  "$schema": "https://deno.land/x/denon/schema.json",
+  "scripts": {
+    "build": {
+      "cmd": "deno bundle src/mod.ts dist/index.js",
+      "desc": "builds index.ts into index.js"
+    },
+    "db": {
+      "cmd": "json-server",
+      "desc": "start development API JSON server",
+      "watch": false
+    },
+    "serve": {
+      "cmd": "denoliver -p 8081 ./dist",
+      "desc": "serve index.html and restart if changes in /dist"
+    }
+  },
+  "watcher": {
+    "exts": ["ts"],
+    "match": ["src/*"],
+    "skip": ["build/"]
+  }
+}
