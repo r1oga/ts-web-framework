@@ -32,10 +32,7 @@ export class User {
   }
 
   async save(): Promise<void> {
-    const id = this.get('id')
-    const name = this.get('name')
-    const age = this.get('age')
-    this.sync.save({ id, name, age })
+    await this.sync.save(this.attributes.getAll())
   }
 
   async fetch(): Promise<void> {

@@ -8,6 +8,10 @@ export class Attributes<T> {
     return this.data[key]
   }
 
+  getAll = (): T => {
+    return this.data
+  }
+
   set = (update: T): void => {
     Object.assign(this.data, update)
   }
