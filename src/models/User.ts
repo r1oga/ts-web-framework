@@ -17,8 +17,9 @@ export class User {
     return this.attributes.get
   }
 
-  get set() {
-    return this.attributes.set
+  set(update: UserProps) {
+    this.attributes.set(update)
+    this.events.trigger('change')
   }
 
   get on() {
