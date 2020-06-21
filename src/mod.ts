@@ -1,15 +1,16 @@
-const API_URL = 'http://localhost:8000/'
+import { User } from './models/User.ts'
 ;(async () => {
-  await fetch(`${API_URL}users`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: 'r1oga',
-      age: 50
-    })
-  })
-  const response = await fetch(API_URL)
-  const data = await response.json()
-  console.log(data)
+  // await fetch(`${API_URL}users`, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     name: 'r1oga',
+  //     age: 50
+  //   })
+  // })
+
+  const user = new User({ id: 1 })
+  console.log(user.get('name'))
+  await user.fetch()
+  console.log(user.get('name'))
 })()
-// http://localhost:8000/

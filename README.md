@@ -27,4 +27,12 @@ TypeScript Web Framework
 2. In separate terminals:
   - `denon build`: build and watch for changes in [/src](./src)
   - `denon serve`: serve [/dist](./dist) on port 8081 and watch for changes
-  - `denon db`:  start API development JSON server on port 8000
+  - `denon db`:  start API development JSON server on port 3000
+
+## REST API
+|Method|Route|Description|
+|--|--|
+|GET|/users|Retrieve all users|
+|GET|/users/:id|Retrieve one user|
+|POST|/users|Create one user|
+|PUT|/users/:id|Update one user|

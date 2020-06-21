@@ -1,4 +1,5 @@
 import { UserProps, Callback } from './interfaces.ts'
+import { API_URL } from '../config.js'
 
 export class User {
   events: { [key: string]: Callback[] } = {}
@@ -32,9 +33,13 @@ export class User {
     this.events[eventName]?.forEach(cb => cb())
   }
 
-  // //  fetch data from server about a user
-  // fetch() {}
-  //
+  //  fetch data from server
+  async fetch() {
+    const res = await fetch(`${API_URL}users/${this.get('id')}`)
+    const data = await res.json()
+    this.set(data)
+  }
+
   // // store user data on server
   // save() {}
 }

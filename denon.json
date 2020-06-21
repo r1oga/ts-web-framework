@@ -6,7 +6,7 @@
       "desc": "builds index.ts into index.js"
     },
     "db": {
-      "cmd": "json-server",
+      "cmd": "json-server --watch db.json",
       "desc": "start development API JSON server",
       "watch": false
     },
