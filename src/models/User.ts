@@ -40,6 +40,22 @@ export class User {
     this.set(data)
   }
 
-  // // store user data on server
-  // save() {}
+  // store user data on server
+  async save() {
+    const id = this.get('id')
+    if (id) {
+      const id = this.get('id')
+      await fetch(`${API_URL}users/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.data)
+      })
+    } else {
+      await fetch(`${API_URL}users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(this.data)
+      })
+    }
+  }
 }
