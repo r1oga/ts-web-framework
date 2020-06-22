@@ -1,12 +1,10 @@
-import { User } from './User.ts'
-import { UserProps } from './interfaces.ts'
 import { Eventing } from './Eventing.ts'
 
-export class Collection {
-  models: User[] = []
+export class Collection<T, K> {
+  models: T[] = []
   events: Eventing = new Eventing()
 
-  constructor(public rootUrl: string) {}
+  constructor(public rootUrl: string, public deserialize: (json: K) => T) {}
   get on() {
     return this.events.on
   }
@@ -18,9 +16,8 @@ export class Collection {
   async fetch(): Promise<void> {
     const res = await fetch(this.rootUrl)
     const users = await res.json()
-    users.forEach((data: UserProps) => {
-      const user = User.buildUser(data)
-      this.models.push(user)
+    users.forEach((data: K) => {
+      this.models.push(this.deserialize(data))
     })
 
     this.trigger('change')
