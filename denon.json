@@ -2,7 +2,7 @@
   "$schema": "https://deno.land/x/denon/schema.json",
   "scripts": {
     "build": {
-      "cmd": "deno bundle src/mod.ts dist/index.js",
+      "cmd": "deno bundle -c tsconfig.json src/mod.ts dist/index.js",
       "desc": "builds index.ts into index.js"
     },
     "db": {
