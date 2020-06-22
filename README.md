@@ -29,6 +29,11 @@ TypeScript Web Framework
   - `denon serve`: serve [/dist](./dist) on port 8081 and watch for changes
   - `denon db`:  start API development JSON server on port 3000
 
+## Architecture
+### Models classes
+Handles data. Used to represent e.g Users.
+### Views classes
+Handle HTML and events caused by user,
 ## REST API
 |Method|Route|Description|
 |--|--|
