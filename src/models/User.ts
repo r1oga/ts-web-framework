@@ -1,4 +1,5 @@
 import { Model } from './Model.ts'
+import { Collection } from './Collection.ts'
 import { UserProps } from './interfaces.ts'
 import { Attributes } from './Attributes.ts'
 import { ApiSync } from './ApiSync.ts'
@@ -11,6 +12,12 @@ export class User extends Model<UserProps> {
       new Attributes<UserProps>(attrs),
       new Eventing(),
       new ApiSync<UserProps>(API_URL)
+    )
+  }
+
+  static buildUserCollection(): Collection<User, UserProps> {
+    return new Collection<User, UserProps>(API_URL, json =>
+      User.buildUser(json)
     )
   }
 }
