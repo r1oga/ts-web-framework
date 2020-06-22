@@ -3,12 +3,17 @@ export class UserForm {
 
   eventsMap(): { [key: string]: () => void } {
     return {
-      'click:button': this.onButtonClick
+      'click:button': this.onButtonClick,
+      'mouseenter:h1': this.onHeaderHover
     }
   }
 
   onButtonClick(): void {
     console.log('Hello')
+  }
+
+  onHeaderHover(): void {
+    console.log('Hovered')
   }
 
   // generate HTML string
