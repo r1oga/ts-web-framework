@@ -1,7 +1,8 @@
-import { User } from './models/User.ts'
+import { Collection } from './models/Collection.ts'
+import { API_URL } from './config.js'
 ;(async () => {
-  const user = User.buildUser({ id: 1, name: 'blabl', age: 12 })
-  user.on('change', () => console.log('changed!'))
-
-  user.fetch()
+  const collection = new Collection(API_URL)
+  collection.on('change', () => console.log('changed'))
+  await collection.fetch()
+  console.log(collection.models)
 })()
