@@ -1,21 +1,24 @@
 import { User } from '../models/User.ts'
 
 export class UserForm {
-  constructor(public parent: Element, public model: User) {}
+  constructor(public parent: Element, public model: User) {
+    this.bindModel()
+  }
+
+  bindModel(): void {
+    this.model.on('change', () => {
+      this.render()
+    })
+  }
 
   eventsMap(): { [key: string]: () => void } {
     return {
-      'click:button': this.onButtonClick,
-      'mouseenter:h1': this.onHeaderHover
+      'click:#set-age': this.onSetAgeClick
     }
   }
 
-  onButtonClick(): void {
-    console.log('Hello')
-  }
-
-  onHeaderHover(): void {
-    console.log('Hovered')
+  onSetAgeClick = (): void => {
+    this.model.setRandomAge()
   }
 
   // generate HTML string
@@ -27,6 +30,7 @@ export class UserForm {
       <div>User Age: ${this.model.get('age')}</div>
       <input />
       <button>click me</button>
+      <button id='set-age'>Set random age</button>
     </div>
     `
   }
@@ -45,6 +49,7 @@ export class UserForm {
 
   // add template HTML string to parent
   render(): void {
+    this.parent.innerHTML = ''
     const templateElement = document.createElement('template')
     templateElement.innerHTML = this.template()
 
