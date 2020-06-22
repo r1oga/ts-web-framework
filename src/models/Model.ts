@@ -7,23 +7,31 @@ export class Model<T extends HasId> {
     private sync: Sync<T>
   ) {}
 
+  /*
   get get() {
     return this.attributes.get
   }
+  equivalent to the above: method pass through
+  Don't work if we are assigning properties inside the constructor:
+    constructor (attrs: ModelAttributes<T>) {
+      this.attributes = new ModelAttributes<T>
+    }
+  --> this.get would be assigned before this.attributes
+  we would try to access this.attributes before it has been initialized
+  Works only if we use a the modifier shorten syntax
+    constructor(private attributes: ModelAttributes<T>) {
+  */
+  get = this.attributes.get
 
   set(update: T) {
     this.attributes.set(update)
     this.events.trigger('change')
   }
 
-  get on() {
-    return this.events.on
-  }
+  on = this.events.on
 
   // returns reference to events.trigger function
-  get trigger() {
-    return this.events.trigger
-  }
+  trigger = this.events.trigger
 
   async save(): Promise<void> {
     try {
