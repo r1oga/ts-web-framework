@@ -1,0 +1,25 @@
+{
+  "name": "web-framework",
+  "version": "1.0.0",
+  "description": "TypeScript Web Framework",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^3.9.5",
+    "typescript-deno-plugin": "^1.31.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r1oga/ts-web-framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r1oga/ts-web-framework/issues"
+  },
+  "homepage": "https://github.com/r1oga/ts-web-framework#readme"
+}
