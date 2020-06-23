@@ -25,8 +25,12 @@ export class UserForm {
   onSetNameClick = (): void => {
     // can't use event object, need to reach into the DOM
     const input = this.parent.querySelector('input')
-    const name = input.value
-    this.model.set({ name }) // triggers a change event and re redering via bindModel
+
+    // type guard
+    if (input) {
+      const name = input.value
+      this.model.set({ name }) // triggers a change event and re redering via bindModel
+    }
   }
 
   // generate HTML string
