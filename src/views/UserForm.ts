@@ -13,12 +13,20 @@ export class UserForm {
 
   eventsMap(): { [key: string]: () => void } {
     return {
-      'click:#set-age': this.onSetAgeClick
+      'click:#set-age': this.onSetAgeClick,
+      'click:#set-name': this.onSetNameClick
     }
   }
 
   onSetAgeClick = (): void => {
     this.model.setRandomAge()
+  }
+
+  onSetNameClick = (): void => {
+    // can't use event object, need to reach into the DOM
+    const input = this.parent.querySelector('input')
+    const name = input.value
+    this.model.set({ name }) // triggers a change event and re redering via bindModel
   }
 
   // generate HTML string
@@ -29,7 +37,7 @@ export class UserForm {
       <div>User Name: ${this.model.get('name')}</div>
       <div>User Age: ${this.model.get('age')}</div>
       <input />
-      <button>click me</button>
+      <button id='set-name'>Change name</button>
       <button id='set-age'>Set random age</button>
     </div>
     `
