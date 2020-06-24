@@ -1,7 +1,8 @@
-import { User } from '../models/User.ts'
+import { Model } from '../models/Model.ts'
 
-export abstract class View {
-  constructor(public parent: Element, public model: User) {
+// generic class with generic constraint
+export abstract class View<T extends Model<K>, K> {
+  constructor(public parent: Element, public model: T) {
     this.bindModel()
   }
 
