@@ -1,16 +1,18 @@
-import { UserForm } from './views/UserForm.ts'
-import { UserEdit } from './views/UserEdit.ts'
+import { UserList } from './views/UserList.ts'
+import { Collection } from './models/Collection.ts'
+import { UserProps } from './models/interfaces.ts'
 import { User } from './models/User.ts'
+import { API_URL } from './config.js'
 
-const user = User.buildUser({ name: 'r1oga', age: 20 })
+const users = new Collection(API_URL, (json: UserProps) => {
+  return User.buildUser(json)
+})
 
-const root = document.getElementById('root')
+users.on('change', () => {
+  const root = document.getElementById('root')
 
-// type guard
-if (root) {
-  const userEdit = new UserEdit(root, user)
-  userEdit.render()
-  console.log(userEdit)
-} else {
-  throw new Error('Root element not found')
-}
+  if (root) {
+    new UserList(root, users).render()
+  }
+})
+users.fetch()
