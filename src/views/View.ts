@@ -6,8 +6,30 @@ export abstract class View<T extends Model<K>, K> {
     this.bindModel()
   }
 
-  abstract eventsMap(): { [key: string]: () => void }
   abstract template(): string
+
+  regions: { [key: string]: Element } = {}
+
+  regionsMap(): { [key: string]: string } {
+    return {}
+  }
+
+  mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap()
+
+    for (let key in regionsMap) {
+      const selector = regionsMap[key]
+      const element = fragment.querySelector(selector)
+      if (element) {
+        this.regions[key] = element
+      }
+    }
+  }
+
+  // eventsMap does not necessarily need to be implemented
+  eventsMap(): { [key: string]: () => void } {
+    return {}
+  }
 
   bindModel(): void {
     this.model.on('change', () => {
@@ -27,6 +49,9 @@ export abstract class View<T extends Model<K>, K> {
     }
   }
 
+  onRender(): void {
+    this.parent.innerHTML = ''
+  }
   // add template HTML string to parent
   render(): void {
     this.parent.innerHTML = ''
@@ -34,6 +59,10 @@ export abstract class View<T extends Model<K>, K> {
     templateElement.innerHTML = this.template()
 
     this.bindEvents(templateElement.content)
+    this.mapRegions(templateElement.content)
+
+    // nest elements
+    this.onRender()
     this.parent.append(templateElement.content)
   }
 }
