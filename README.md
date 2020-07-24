@@ -36,7 +36,7 @@ Handles data. Used to represent e.g Users.
 Handle HTML and events caused by user,
 ## REST API
 |Method|Route|Description|
-|--|--|
+|--|--|--|
 |GET|/users|Retrieve all users|
 |GET|/users/:id|Retrieve one user|
 |POST|/users|Create one user|
